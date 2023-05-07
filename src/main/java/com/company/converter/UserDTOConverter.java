@@ -1,6 +1,7 @@
 package com.company.converter;
 
 import com.company.dto.UserDTO;
+import com.company.service.UserService;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,6 @@ public class UserDTOConverter implements Converter<String, UserDTO> {
 
     @Override
     public UserDTO convert(String userName) {
-        return userService.findById(userName);
+        return userService.findByUserName(userName);
     }
 }

@@ -1,34 +1,36 @@
-//package com.company.controller;
-//
-//import com.company.dto.UserDTO;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.*;
-//
-//import javax.validation.Valid;
-//
-//@Controller
-//@RequestMapping("/user")
-//public class UserController {
-//
-//    private final RoleService roleService;
-//    private final UserService userService;
-//
-//    public UserController(RoleService roleService, UserService userService) {
-//        this.roleService = roleService;
-//        this.userService = userService;
-//    }
-//
-//    @GetMapping("/create")
-//    public String createUser(Model model){
-//
-//        model.addAttribute("user", new UserDTO());
-//        model.addAttribute("roles",roleService.findAll());
-//        model.addAttribute("users",userService.findAll());
-//
-//        return "/user/create";
-//    }
+package com.company.controller;
+
+import com.company.dto.UserDTO;
+import com.company.service.RoleService;
+import com.company.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+
+    private final RoleService roleService;
+    private final UserService userService;
+
+    public UserController(RoleService roleService, UserService userService) {
+        this.roleService = roleService;
+        this.userService = userService;
+    }
+
+    @GetMapping("/create")
+    public String createUser(Model model){
+
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("roles",roleService.listAllRoles());
+        model.addAttribute("users",userService.listAllUsers());
+
+        return "/user/create";
+    }
 //
 //    @PostMapping("/create")
 //    public String insertUser(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
@@ -72,4 +74,4 @@
 //    }
 //
 //
-//}
+}
