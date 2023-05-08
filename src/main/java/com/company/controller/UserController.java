@@ -45,17 +45,17 @@ public class UserController {
 
         return "redirect:/user/create";
     }
-//
-//    @GetMapping("/update/{username}")
-//    public String editUser(@PathVariable("username") String username, Model model){
-//
-//        model.addAttribute("user", userService.findById(username));
-//        model.addAttribute("roles",roleService.findAll());
-//        model.addAttribute("users",userService.findAll());
-//
-//
-//        return "/user/update";
-//    }
+
+    @GetMapping("/update/{username}")
+    public String editUser(@PathVariable("username") String username, Model model){
+
+        model.addAttribute("user", userService.findByUserName(username));
+        model.addAttribute("roles",roleService.listAllRoles());
+        model.addAttribute("users",userService.listAllUsers());
+
+
+        return "/user/update";
+    }
 //
 //    @PostMapping("/update")
 //    public String updateUser(@Valid @ModelAttribute("user") UserDTO user){ // without using @ModelAttribute it is ok
