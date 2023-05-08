@@ -56,15 +56,19 @@ public class UserController {
 
         return "/user/update";
     }
-//
-//    @PostMapping("/update")
-//    public String updateUser(@Valid @ModelAttribute("user") UserDTO user){ // without using @ModelAttribute it is ok
-//
-//        userService.update(user);
-//
-//        return "redirect:/user/create";
-//    }
-//
+
+    @PostMapping("/update")
+    public String updateUser(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){ // without using @ModelAttribute it is ok
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("roles", roleService.listAllRoles());
+            model.addAttribute("users", userService.listAllUsers());
+        }
+        userService.update(user);
+
+        return "redirect:/user/create";
+    }
+
 //    @GetMapping("/delete/{username}")
 //    public String deleteUser(@PathVariable("username") String username, Model model){
 //
@@ -72,6 +76,6 @@ public class UserController {
 //
 //        return "redirect:/user/create";
 //    }
-//
-//
+
+
 }

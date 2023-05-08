@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> listAllUsers() {
 
-        List<User> userList=userRepository.findAll(Sort.by("firstName"));
-        List<UserDTO> userDTOList=userList.stream().map(userMapper::convertToDto).collect(Collectors.toList());
+        List<User> userList = userRepository.findAll(Sort.by("firstName"));
+        List<UserDTO> userDTOList = userList.stream().map(userMapper::convertToDto).collect(Collectors.toList());
         return userDTOList
                 ;
     }
@@ -38,12 +38,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(UserDTO user) {
-        User entity=userMapper.convertToEntity(user);
+        User entity = userMapper.convertToEntity(user);
         userRepository.save(entity);
     }
 
     @Override
     public void deleteByUserName(String username) {
 
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        User entity = userMapper.convertToEntity(userDTO);
+        //setId to the updated object and save to db
+        entity.setId(userRepository.findByUserName(entity.getUserName()).getId());
+        userRepository.save(entity);
+        return findByUserName(userDTO.getUserName());
     }
 }
