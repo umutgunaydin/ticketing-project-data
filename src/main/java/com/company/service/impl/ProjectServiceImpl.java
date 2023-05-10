@@ -2,6 +2,7 @@ package com.company.service.impl;
 
 import com.company.dto.ProjectDTO;
 import com.company.entity.Project;
+import com.company.entity.User;
 import com.company.enums.Status;
 import com.company.mapper.ProjectMapper;
 import com.company.repository.ProjectRepository;
@@ -45,6 +46,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void delete(String code) {
-
+        Project project=projectRepository.findByProjectCode(code);
+        project.setIsDeleted(true);
+        projectRepository.save(project);
     }
 }
