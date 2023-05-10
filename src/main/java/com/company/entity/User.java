@@ -4,6 +4,7 @@ import com.company.enums.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "users")
+@Where(clause = "is_deleted=false") //userRepository includes this condition automatically for all queries
 public class User extends BaseEntity {
 
     private String firstName;

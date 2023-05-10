@@ -2,7 +2,9 @@ package com.company.service.impl;
 
 import com.company.dto.UserDTO;
 import com.company.entity.User;
+import com.company.mapper.ProjectMapper;
 import com.company.mapper.UserMapper;
+import com.company.repository.ProjectRepository;
 import com.company.repository.UserRepository;
 import com.company.service.UserService;
 import org.springframework.data.domain.Sort;
@@ -54,5 +56,20 @@ public class UserServiceImpl implements UserService {
         entity.setId(userRepository.findByUserName(entity.getUserName()).getId());
         userRepository.save(entity);
         return findByUserName(userDTO.getUserName());
+    }
+
+    @Override
+    public void delete(String username) {
+
+        User user=userRepository.findByUserName(username);
+        user.setIsDeleted(true);
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public List<UserDTO> listAllByRole(String role) {
+        List<User> users=userRepository.findByRoleDescriptionIgnoreCase(role);
+        return users.stream().map(userMapper::convertToDto).collect(Collectors.toList());
     }
 }
