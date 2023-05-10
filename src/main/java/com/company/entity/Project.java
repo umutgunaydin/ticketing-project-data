@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "projects")
 @Where(clause = "is_deleted=false")
 public class Project extends BaseEntity {
 

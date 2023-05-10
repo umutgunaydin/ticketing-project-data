@@ -1,7 +1,6 @@
 package com.company.service;
 
 import com.company.dto.UserDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,6 +16,7 @@ public interface UserService {
 
     UserDTO update(UserDTO userDTO);
     void delete(String username);
+    List<UserDTO> listAllByRole(String role);
 
 
 }
