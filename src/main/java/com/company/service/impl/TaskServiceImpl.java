@@ -65,4 +65,14 @@ public class TaskServiceImpl implements TaskService {
         }
         return null;
     }
+
+    @Override
+    public int totalCompletedTasks(String projectCode) {
+        return taskRepository.totalCompletedTasks(projectCode);
+    }
+
+    @Override
+    public int totalNonCompletedTasks(String projectCode) {
+        return taskRepository.totalNonCompletedTasks(projectCode);
+    }
 }
