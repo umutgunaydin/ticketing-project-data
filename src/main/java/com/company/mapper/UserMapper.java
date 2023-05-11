@@ -3,9 +3,10 @@ package com.company.mapper;
 import com.company.dto.UserDTO;
 import com.company.entity.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
-@Controller
+@Component
 public class UserMapper {
 
     private final ModelMapper modelMapper;
