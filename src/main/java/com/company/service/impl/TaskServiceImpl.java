@@ -2,12 +2,15 @@ package com.company.service.impl;
 
 import com.company.dto.TaskDTO;
 import com.company.entity.Task;
+import com.company.enums.Status;
 import com.company.mapper.TaskMapper;
 import com.company.repository.TaskRepository;
 import com.company.service.TaskService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +31,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void save(TaskDTO dto) {
+        dto.setTaskStatus(Status.OPEN);
+        dto.setAssignedDate(LocalDate.now());
         taskRepository.save(taskMapper.convertToEntity(dto));
     }
 
@@ -40,7 +45,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void delete(Long id) {
-
+        Optional<Task> task=taskRepository.findById(id);
+        if (task.isPresent()){
+            task.get().setIsDeleted(true);
+            taskRepository.save(task.get());
+        }
     }
 
     @Override
