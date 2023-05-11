@@ -68,10 +68,16 @@ public class TaskController {
         return "task/update";
     }
 
-    @PostMapping("/update/{taskId}")
-    public String updateTask(@PathVariable("taskId") Long taskId,TaskDTO task){
+    @PostMapping("/update/{id}")
+    public String updateTask(@ModelAttribute("task") TaskDTO task,BindingResult bindingResult,Model model){
 
-        task.setId(taskId);
+        if (bindingResult.hasErrors()){
+            model.addAttribute("projects",projectService.listAllProjects());
+            model.addAttribute("employees",userService.listAllByRole("employee"));
+            model.addAttribute("tasks",taskService.listAllTasks());
+
+            return "task/update";
+        }
 
         taskService.update(task);
 
