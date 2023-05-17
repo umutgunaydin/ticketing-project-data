@@ -43,11 +43,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void update(TaskDTO dto) {
-        Optional<Task> task=taskRepository.findById(dto.getId());
-        Task converted=taskMapper.convertToEntity(dto);
+        Optional<Task> task = taskRepository.findById(dto.getId());
+        Task converted = taskMapper.convertToEntity(dto);
 
         if (task.isPresent()) {
-            converted.setTaskStatus(task.get().getTaskStatus());
+            converted.setTaskStatus(dto.getTaskStatus() == null ? task.get().getTaskStatus() : dto.getTaskStatus());
             converted.setAssignedDate(task.get().getAssignedDate());
             taskRepository.save(converted);
         }
@@ -55,8 +55,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void delete(Long id) {
-        Optional<Task> task=taskRepository.findById(id);
-        if (task.isPresent()){
+        Optional<Task> task = taskRepository.findById(id);
+        if (task.isPresent()) {
             task.get().setIsDeleted(true);
             taskRepository.save(task.get());
         }
@@ -64,8 +64,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO findById(Long id) {
-        Optional<Task> task=taskRepository.findById(id);
-        if (task.isPresent()){
+        Optional<Task> task = taskRepository.findById(id);
+        if (task.isPresent()) {
             return taskMapper.convertToDto(task.get());
         }
         return null;
@@ -83,8 +83,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteByProject(ProjectDTO projectDTO) {
-        Project project=projectMapper.convertToEntity(projectDTO);
-        List<Task> tasks=taskRepository.findAllByProject(project);
+        Project project = projectMapper.convertToEntity(projectDTO);
+        List<Task> tasks = taskRepository.findAllByProject(project);
         tasks.forEach(task -> delete(task.getId()));
+    }
+
+    @Override
+    public void completeByProject(ProjectDTO projectDTO) {
+        Project project = projectMapper.convertToEntity(projectDTO);
+        List<Task> tasks = taskRepository.findAllByProject(project);
+        tasks.stream().map(taskMapper::convertToDto).forEach(taskDTO -> {
+            taskDTO.setTaskStatus(Status.COMPLETE);
+            update(taskDTO);
+        });
     }
 }
