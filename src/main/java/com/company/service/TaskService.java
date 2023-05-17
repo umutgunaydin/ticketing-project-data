@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.dto.ProjectDTO;
 import com.company.dto.TaskDTO;
 import com.company.entity.Task;
 
@@ -14,5 +15,6 @@ public interface TaskService {
     TaskDTO findById(Long id);
     int totalCompletedTasks(String projectCode);
     int totalNonCompletedTasks(String projectCode);
+    void deleteByProject(ProjectDTO projectDTO);
 
 }
