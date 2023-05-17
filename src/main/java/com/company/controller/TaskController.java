@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/task")
 public class TaskController {
@@ -35,7 +37,7 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String insertTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+    public String insertTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", projectService.listAllProjects());
@@ -69,7 +71,7 @@ public class TaskController {
     }
 
     @PostMapping("/update/{id}")
-    public String updateTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+    public String updateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", projectService.listAllProjects());
@@ -115,7 +117,7 @@ public class TaskController {
     }
 
     @PostMapping("/employee/update/{id}")
-    public String employeeUpdateTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+    public String employeeUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("statuses", Status.values());

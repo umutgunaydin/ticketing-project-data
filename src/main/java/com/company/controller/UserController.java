@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public String insertUser(@ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
+    public String insertUser(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
             model.addAttribute("roles",roleService.listAllRoles());

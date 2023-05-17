@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -34,7 +35,7 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public String insertProject(@ModelAttribute("project") ProjectDTO project, BindingResult bindingResult,Model model){
+    public String insertProject(@Valid @ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
             model.addAttribute("managers",userService.listAllByRole("manager"));
@@ -72,7 +73,7 @@ public class ProjectController {
     }
 
     @PostMapping("/update")
-    public String updateProject(@ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
+    public String updateProject(@Valid @ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
 
         if (bindingResult.hasErrors()){
             model.addAttribute("managers",userService.listAllByRole("manager"));
