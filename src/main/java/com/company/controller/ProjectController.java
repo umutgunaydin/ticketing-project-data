@@ -28,7 +28,7 @@ public class ProjectController {
 
         model.addAttribute("project", new ProjectDTO());
         model.addAttribute("managers",userService.listAllByRole("Manager"));
-        model.addAttribute("projects", projectService.listAllProjects());
+        model.addAttribute("projects", projectService.listAllProjectDetails());
 
         return "/project/create";
     }
@@ -38,7 +38,7 @@ public class ProjectController {
 
         if(bindingResult.hasErrors()){
             model.addAttribute("managers",userService.listAllByRole("manager"));
-            model.addAttribute("projects", projectService.listAllProjects());
+            model.addAttribute("projects", projectService.listAllProjectDetails());
             return "/project/create";
         }
         projectService.save(project);
@@ -66,7 +66,7 @@ public class ProjectController {
 
         model.addAttribute("project", projectService.getByProjectCode(projectCode));
         model.addAttribute("managers",userService.listAllByRole("manager"));
-        model.addAttribute("projects", projectService.listAllProjects());
+        model.addAttribute("projects", projectService.listAllProjectDetails());
 
         return "project/update";
     }
@@ -76,7 +76,7 @@ public class ProjectController {
 
         if (bindingResult.hasErrors()){
             model.addAttribute("managers",userService.listAllByRole("manager"));
-            model.addAttribute("projects", projectService.listAllProjects());
+            model.addAttribute("projects", projectService.listAllProjectDetails());
 
             return "/project/update";
         }
