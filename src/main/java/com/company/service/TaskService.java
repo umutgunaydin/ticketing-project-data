@@ -2,7 +2,9 @@ package com.company.service;
 
 import com.company.dto.ProjectDTO;
 import com.company.dto.TaskDTO;
+import com.company.dto.UserDTO;
 import com.company.entity.Task;
+import com.company.entity.User;
 import com.company.enums.Status;
 
 import java.util.List;
@@ -20,4 +22,5 @@ public interface TaskService {
     void completeByProject(ProjectDTO projectDTO);
     List<TaskDTO> listAllTasksByStatusIsNot(Status status);
     List<TaskDTO> listAllTasksByStatus(Status status);
+    List<TaskDTO> listAllNonCompletedByAssignedEmployee(UserDTO assignedEmployee);
 }

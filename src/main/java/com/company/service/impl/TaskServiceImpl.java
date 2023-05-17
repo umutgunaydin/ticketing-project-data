@@ -5,6 +5,7 @@ import com.company.dto.TaskDTO;
 import com.company.dto.UserDTO;
 import com.company.entity.Project;
 import com.company.entity.Task;
+import com.company.entity.User;
 import com.company.enums.Status;
 import com.company.mapper.ProjectMapper;
 import com.company.mapper.TaskMapper;
@@ -116,6 +117,14 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDTO> listAllTasksByStatus(Status status) {
         UserDTO loggedInUser = userService.findByUserName("john@employee.com");
         List<Task> tasks = taskRepository.findAllByTaskStatusAndAssignedEmployee(status, userMapper.convertToEntity(loggedInUser));
+        return tasks.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> listAllNonCompletedByAssignedEmployee(UserDTO assignedEmployee) {
+        List<Task> tasks=taskRepository
+                .findAllByTaskStatusIsNotAndAssignedEmployee(Status.COMPLETE,userMapper.convertToEntity(assignedEmployee));
+
         return tasks.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
     }
 }
