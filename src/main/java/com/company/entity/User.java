@@ -13,11 +13,12 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "users")
-@Where(clause = "is_deleted=false") //userRepository includes this condition automatically for all queries
+//@Where(clause = "is_deleted=false") //userRepository includes this condition automatically for all queries
 public class User extends BaseEntity {
 
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String userName;
     private String password;
     private boolean enabled;
